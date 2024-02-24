@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => RoutePink()),
+                MaterialPageRoute(builder: (context) => RoutePink(metin: 'Message',)),
               );
             })
       ])),
@@ -38,6 +38,10 @@ class HomePage extends StatelessWidget {
 ///   ROUTE PINK
 ///////////////////////////////////////////////
 class RoutePink extends StatelessWidget {
+  String? metin;
+  
+  RoutePink({this.metin});
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,14 +49,15 @@ class RoutePink extends StatelessWidget {
       appBar: AppBar(title: Text('Route Pink')),
       body: Center(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Text('RoutePink on top now'),   
+        Text('RoutePink on top now'),
+            Text('Message from Homepage: $metin'),
             SizedBox(height:30),
         ElevatedButton(
             child: Text('Go to -> Route Green'),
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => RouteGreen()),
+                MaterialPageRoute(builder: (context) => RouteGreen(strNew: 'Message',)),
               );
             }),
             SizedBox(height:30),
@@ -70,6 +75,8 @@ class RoutePink extends StatelessWidget {
 ///   ROUTE GREEN
 ///////////////////////////////////////////////
 class RouteGreen extends StatelessWidget {
+  String? strNew;
+  RouteGreen({this.strNew});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,6 +85,7 @@ class RouteGreen extends StatelessWidget {
       body: Center(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Text('RouteGreen on top now'),
+                    Text('Message from Pink page: $strNew'),
             SizedBox(height:30),
         ElevatedButton(
             child: Text('Go to -> Route Grey'),
