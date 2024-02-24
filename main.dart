@@ -12,6 +12,8 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
+  Human human_1 = Human(name: 'Andrew', age: 35);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,13 +22,15 @@ class HomePage extends StatelessWidget {
       body: Center(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Text('HomePage'),
-            SizedBox(height:30),
+        SizedBox(height: 30),
         ElevatedButton(
             child: Text('Go to -> Route Pink'),
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => RoutePink(metin: 'Message',)),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        RoutePink(metin: 'Message', human: human_1)),
               );
             })
       ])),
@@ -39,9 +43,11 @@ class HomePage extends StatelessWidget {
 ///////////////////////////////////////////////
 class RoutePink extends StatelessWidget {
   String? metin;
-  
-  RoutePink({this.metin});
-  
+
+  Human? human;
+
+  RoutePink({this.metin, this.human});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,17 +56,21 @@ class RoutePink extends StatelessWidget {
       body: Center(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Text('RoutePink on top now'),
-            Text('Message from Homepage: $metin'),
-            SizedBox(height:30),
+        Text('User name: ${human?.name}, Age: ${human?.age} '),
+        Text('Message from Homepage: $metin'),
+        SizedBox(height: 30),
         ElevatedButton(
             child: Text('Go to -> Route Green'),
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => RouteGreen(strNew: 'Message',)),
+                MaterialPageRoute(
+                    builder: (context) => RouteGreen(
+                          strNew: 'Message',
+                        )),
               );
             }),
-            SizedBox(height:30),
+        SizedBox(height: 30),
         ElevatedButton(
             child: Text('Back'),
             onPressed: () {
@@ -85,8 +95,8 @@ class RouteGreen extends StatelessWidget {
       body: Center(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Text('RouteGreen on top now'),
-                    Text('Message from Pink page: $strNew'),
-            SizedBox(height:30),
+        Text('Message from Pink page: $strNew'),
+        SizedBox(height: 30),
         ElevatedButton(
             child: Text('Go to -> Route Grey'),
             onPressed: () {
@@ -95,7 +105,7 @@ class RouteGreen extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => RouteGrey()),
               );
             }),
-            SizedBox(height:30),
+        SizedBox(height: 30),
         ElevatedButton(
             child: Text('Back'),
             onPressed: () {
@@ -118,13 +128,20 @@ class RouteGrey extends StatelessWidget {
       body: Center(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Text('RouteGrey on top now'),
-            SizedBox(height:30),
+        SizedBox(height: 30),
         ElevatedButton(
             child: Text('Go to Homepage'),
             onPressed: () {
-              Navigator.popUntil(context,(route)=>route.isFirst);
+              Navigator.popUntil(context, (route) => route.isFirst);
             }),
       ])),
     );
   }
+}
+
+class Human {
+  String? name;
+  int? age;
+
+  Human({this.name, this.age});
 }
