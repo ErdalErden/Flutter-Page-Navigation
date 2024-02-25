@@ -5,14 +5,19 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomePage(),
-    );
+    return MaterialApp(initialRoute: '/', routes: {
+      HomePage.routeName: (context) => HomePage(),
+      RoutePink.routeName: (context) => RoutePink(),
+      RouteGreen.routeName: (context) => RouteGreen(),
+      RouteGrey.routeName: (context) => RouteGrey(),
+    });
   }
 }
 
 class HomePage extends StatelessWidget {
-  Human human_1 = Human(name: 'Andrew', age: 35);
+  static String routeName = '/';
+  final Human human_1 = Human(name: 'Andrew', age: 35);
+
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +31,8 @@ class HomePage extends StatelessWidget {
         ElevatedButton(
             child: Text('Go to -> Route Pink'),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        RoutePink(metin: 'Message', human: human_1)),
-              );
+              Navigator.pushNamed(context, RoutePink.routeName,
+                  arguments: human_1);
             })
       ])),
     );
@@ -42,33 +43,26 @@ class HomePage extends StatelessWidget {
 ///   ROUTE PINK
 ///////////////////////////////////////////////
 class RoutePink extends StatelessWidget {
-  String? metin;
-
-  Human? human;
-
-  RoutePink({this.metin, this.human});
+  static String routeName = '/routePink';
 
   @override
   Widget build(BuildContext context) {
+    Human human = ModalRoute.of(context)?.settings.arguments as Human;
+
     return Scaffold(
       backgroundColor: Colors.pink,
       appBar: AppBar(title: Text('Route Pink')),
       body: Center(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Text('RoutePink on top now'),
-        Text('User name: ${human?.name}, Age: ${human?.age} '),
-        Text('Message from Homepage: $metin'),
         SizedBox(height: 30),
+            Text('Username: ${human.name}, Age: ${human.age}'),
+            SizedBox(height: 30),
         ElevatedButton(
             child: Text('Go to -> Route Green'),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => RouteGreen(
-                          strNew: 'Message',
-                        )),
-              );
+              Navigator.pushNamed(context, RouteGreen.routeName,
+                  arguments: {'strNew': 'Message'});
             }),
         SizedBox(height: 30),
         ElevatedButton(
@@ -85,7 +79,8 @@ class RoutePink extends StatelessWidget {
 ///   ROUTE GREEN
 ///////////////////////////////////////////////
 class RouteGreen extends StatelessWidget {
-  String? strNew;
+  static String routeName = '/routeGreen';
+  final String? strNew;
   RouteGreen({this.strNew});
   @override
   Widget build(BuildContext context) {
@@ -100,10 +95,7 @@ class RouteGreen extends StatelessWidget {
         ElevatedButton(
             child: Text('Go to -> Route Grey'),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => RouteGrey()),
-              );
+              Navigator.pushNamed(context, RouteGrey.routeName);
             }),
         SizedBox(height: 30),
         ElevatedButton(
@@ -120,6 +112,7 @@ class RouteGreen extends StatelessWidget {
 ///   ROUTE GREY
 ///////////////////////////////////////////////
 class RouteGrey extends StatelessWidget {
+  static String routeName = '/routeGrey';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
